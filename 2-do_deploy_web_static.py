@@ -32,14 +32,14 @@ def do_deploy(archive_path):
         run('sudo mv /data/web_static/releases/web_static_{}/web_static/* \
 /data/web_static/releases/web_static_{}/'.format(f_name, f_name))
         # remove tmp web_static dir
-                run('sudo rm -rf /data/web_static/releases/web_static_{}/web_static'
-                    .format(f_name))
+        run('sudo rm -rf /data/web_static/releases/web_static_{}/\
+                web_static'.format(f_name))
 
         # remove existing sym link & create new one
         run('sudo rm -rf /data/web_static/current')
         run('sudo ln -s /data/web_static/releases/web_static_{}/\
  /data/web_static/current'.format(f_name))
-        except:
-                return False
+    except:
+        return False
 
-        return True
+    return True
