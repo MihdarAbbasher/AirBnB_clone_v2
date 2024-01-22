@@ -18,7 +18,6 @@ def do_deploy(archive_path):
         if not (path.exists(archive_path)):
             return False
 
-
         put(archive_path, '/tmp/')
         f_path = '/data/web_static/releases/web_static_'
         f_name = archive_path[-18:-4]
@@ -26,7 +25,7 @@ def do_deploy(archive_path):
         # uncompress archive
         run('sudo tar -xzf /tmp/web_static_{}.tgz -C \
 /data/web_static/releases/web_static_{}/'
-                    .format(f_name, f_name))
+.format(f_name, f_name))
         run('sudo rm /tmp/web_static_{}.tgz'.format(f_name))
         # move contents into host web_static
         run('sudo mv /data/web_static/releases/web_static_{}/web_static/* \
