@@ -7,7 +7,7 @@ from os import path
 
 
 env.user = 'ubuntu'
-env.ssh_key_file = '/alx.school'
+env.key_filename = '/alx.school'
 env.hosts = ['54.161.241.146', '18.210.14.165']
 
 
