@@ -7,7 +7,7 @@ from os import path
 
 
 env.user = 'ubuntu'
-env.key_filename = '/alx.school'
+env.key_filename = '/alx/school'
 env.hosts = ['54.161.241.146', '18.210.14.165']
 
 
@@ -19,25 +19,15 @@ def do_deploy(archive_path):
             return False
 
         put(archive_path, '/tmp/')
-        f_path = '/data/web_static/releases/web_static_'
-        f_name = archive_path[-18:-4]
-        run('sudo mkdir -p {}{}/'.format(f_path, f_name))
+        f_name = archive_path[:-4].rsplit('/', 1)[-1] or archive_path[:-4]
+        f_path = '/data/web_static/releases/{}'.format(f_name)
+        run('sudo mkdir -p {}/'.format(f_path))
         # uncompress archive
-        run('sudo tar -xzf /tmp/web_static_{}.tgz -C \
-/data/web_static/releases/web_static_{}/'
-.format(f_name, f_name))
-        run('sudo rm /tmp/web_static_{}.tgz'.format(f_name))
-        # move contents into host web_static
-        run('sudo mv /data/web_static/releases/web_static_{}/web_static/* \
-/data/web_static/releases/web_static_{}/'.format(f_name, f_name))
-        # remove tmp web_static dir
-        run('sudo rm -rf /data/web_static/releases/web_static_{}/\
-                web_static'.format(f_name))
-
+        run('sudo tar -xzf /tmp/{}.tgz -C {}/'.format(f_name, f_path))
+        run('sudo rm /tmp/{}.tgz'.format(f_name))
         # remove existing sym link & create new one
         run('sudo rm -rf /data/web_static/current')
-        run('sudo ln -s /data/web_static/releases/web_static_{}/\
- /data/web_static/current'.format(f_name))
+        run('sudo ln -s {}/ /data/web_static/current'.format(f_path))
     except:
         return False
 
