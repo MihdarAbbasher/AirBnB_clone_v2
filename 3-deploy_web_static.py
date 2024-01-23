@@ -40,7 +40,7 @@ def do_deploy(archive_path):
         run('sudo mkdir -p {}/'.format(f_path))
         # uncompress archive
         run('sudo tar -xzf /tmp/{}.tgz -C {}/'.format(f_name, f_path))
-        if (files.exists(('{}/web_static/'.format(f_path))):
+        if (files.exists(('{}/web_static/'.format(f_path)))):
             run('sudo mv {}/web_static/* {}/'.format(f_path, f_path))
             run('sudo rm -rf {}/web_static'.format(f_path))
         run('sudo rm /tmp/{}.tgz'.format(f_name))
