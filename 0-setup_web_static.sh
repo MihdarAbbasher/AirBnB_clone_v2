@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Sets up web servers for the deployment of web_static
+# Bash script that sets up web servers for the deployment of web_static
 sudo apt-get update
 sudo apt-get -y install nginx
 sudo ufw allow 'Nginx HTTP'
@@ -17,14 +17,26 @@ sudo echo "<html>
     Holberton School
   </body>
 </html>" | sudo tee /data/web_static/releases/test/index.html
-# create soft link -f : force
+
 sudo ln -s -f /data/web_static/releases/test/ /data/web_static/current
 
-# change owner:
 sudo chown -R ubuntu:ubuntu /data/
 
-# replace the string:
-sudo sed -i '/listen 80 default_server/a location /hbnb_static { alias /data/web_static/current/;}' /etc/nginx/sites-enabled/default
-
-# restart nginx
+sudo echo "
+server {
+        listen 80 default_server;
+        location /hbnb_static { alias /data/web_static/current/;}
+        listen [::]:80 default_server;
+        root /var/www/html;
+        index index.html index.htm index.nginx-debian.html;
+        server_name _;
+        add_header X-Served-By \$hostname;
+        location /redirect_me {
+        return 301 http://google.com/;
+        }
+        error_page 404 /404.html;
+        location = /404.html {
+                internal;
+        }
+}" | tee /etc/nginx/sites-enabled/default
 sudo service nginx restart
