@@ -18,7 +18,7 @@ def do_clean(number=0):
     sorted_archives = sorted(os.listdir("versions"))
     # remove archives form list of rm cmd
     [sorted_archives.pop() for i in range(number)]
-    with lcd("versions"): # remove old archives
+    with lcd("versions"):  # remove old archives
         [local("rm ./{}".format(arch)) for arch in sorted_archives]
     # rm in the remote server
     with cd("/data/web_static/releases"):
