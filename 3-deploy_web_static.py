@@ -10,6 +10,7 @@ env.user = 'ubuntu'
 env.key_filename = '/alx/school'
 env.hosts = ['54.161.241.146', '18.210.14.165']
 
+
 def do_pack():
     """Generate archive from the contents of web_static folder"""
 
@@ -23,10 +24,6 @@ def do_pack():
 
     except Exception as e:
         return None
-
-
-
-
 
 
 def do_deploy(archive_path):
@@ -43,7 +40,7 @@ def do_deploy(archive_path):
         # uncompress archive
         run('sudo tar -xzf /tmp/{}.tgz -C {}/'.format(f_name, f_path))
         #run('sudo mv {}/web_static/* {}/'.format(f_path, f_path))
-        #run('sudo rm -rf /data/web_static/releases/{}/web_static'.format(f_name))
+        #run('sudo rm -rf {}/web_static'.format(f_path))
         run('sudo rm /tmp/{}.tgz'.format(f_name))
         # remove existing sym link & create new one
         run('sudo rm -rf /data/web_static/current')
@@ -51,6 +48,7 @@ def do_deploy(archive_path):
     except:
         return False
     return True
+
 
 def deploy():
     """Create and distribute an archive to my web servers."""
