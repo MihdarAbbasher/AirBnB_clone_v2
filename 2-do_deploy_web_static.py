@@ -22,10 +22,10 @@ def do_deploy(archive_path):
         f_name = archive_path[:-4].rsplit('/', 1)[-1] or archive_path[:-4]
         f_path = '/data/web_static/releases/{}'.format(f_name)
         run('sudo mkdir -p {}/'.format(f_path))
-        # uncompress archive
+        # uncompress archive -x extract -C destination
         run('sudo tar -xzf /tmp/{}.tgz -C {}/'.format(f_name, f_path))
-        run('sudo mv {}/web_static/* {}/'.format(f_path, f_path)
-        run('sudo rm -rf {}/web_static/'.format(f_path))
+        # run('sudo mv {}/web_static/* {}/'.format(f_path, f_path)
+        # run('sudo rm -rf {}/web_static/'.format(f_path))
         run('sudo rm /tmp/{}.tgz'.format(f_name))
         # remove existing sym link & create new one
         run('sudo rm -rf /data/web_static/current')
