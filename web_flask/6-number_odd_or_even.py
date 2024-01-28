@@ -2,7 +2,7 @@
 """starts a flask web application listening on 0.0.0.0:5000
 """
 
-from flask import Flask
+from flask import Flask, render_template
 
 app = Flask("__name__")
 
